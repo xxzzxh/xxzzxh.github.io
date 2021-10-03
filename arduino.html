@@ -86,9 +86,6 @@
               </div>
               <div class="swiper-pagination"></div>
             </div>
-         
-
-
           </div>
 
           <div class="col-lg-4">
@@ -110,13 +107,6 @@
             
               <img src="assets/img/project/arduino3.png" alt="" style="width: 240px;">
 
-                <!-- <li><strong>Arduino开发板</strong> X 1</li>
-                <li><strong>200欧姆电阻</strong> X 2</li>
-                <li><strong>连接线</strong> X n </li>
-                <li><strong>面包板</strong> X 1</li>
-                <li><strong>开关</strong> X 2</li>
-                <li><strong>1588LED8*8点阵</strong> X 1</li> -->
-
             </div>
             
           </div>
@@ -131,13 +121,96 @@
             <h3>电路图</h3>
             <p>矩阵的16个引脚连接到Arduino板的16个引脚，六个模拟引脚用作数字输入，通过200欧姆电阻将开关与arduino开发板相连，连接到引脚12和13的2个开关控制1588LED8*8点阵中点亮的LED进行“向上”/“向左”运动。</p>
             <img src="assets/img/project/arduino4.png" alt="" style="width: 600px;">
+            <textarea wrap="off" cols="100" rows="20" style="overflow:scroll;background-color: #f1f1f1;border:0px solid gray" style="width: 100%;">
+          
+              int C[] = {2,7,A5,5,A0,A4,A1,A2};   
+              int R[] = {6,11,10,3,9,8,4,A3};  
+
+              // 2-dimensional array of pixels:
+              unsigned char pixels[8][8];
+              // cursor position:
+              int x = 5;
+              int y = 5;
+              int valX = 0;
+              int valY = 0;
+              int inPinX = 12;
+              int inPinY = 13;
+
+              void setup() {
+                Serial.begin(9600);
+                // initialize the I/O pins as outputs iterate over the pins:
+                for (int thisPin = 0; thisPin < 8; thisPin++) {
+                  // initialize the output pins:
+                  pinMode(C[thisPin], OUTPUT);
+                  pinMode(R[thisPin], OUTPUT);
+                }
+                pinMode(inPinX,INPUT);
+                pinMode(inPinY,INPUT);
+                
+                // initialize the pixel matrix:
+                for (int x = 0; x < 8; x++) {
+                  for (int y = 0; y < 8; y++) {
+                    pixels[x][y] = LOW;
+                  }
+                }
+                
+              }
+
+              void loop() {
+                  pixels[x][y] = HIGH;
+                  Display(pixels); 
+                  int rawX = x;
+                  int rawY = y;
+
+                  valX = digitalRead(inPinX);
+                  valY = digitalRead(inPinY);
+                
+                  
+                  Serial.println(valX);
+              //    Serial.println(valY);
+                  if(valX == 1){
+                    x = (x+1)%8;
+                      delay(500);
+                  }
+                  if(valY == 1){
+                    y = (y+1)%8;
+                      delay(500);
+                  }
+                
+                  pixels[rawX][rawY] = LOW;
+                  pixels[x][y] = HIGH;             
+              
+              }
+              void Display(unsigned char dat[8][8])   //show function  
+              {  
+                for(int c = 0; c<8;c++)  
+                {  
+                  digitalWrite(C[c],LOW);
+                  for(int r = 0;r<8;r++)  
+                  {  
+                    digitalWrite(R[r],dat[r][c]);  
+                  }  
+                  delay(1);  
+                  Clear();  //clear 
+                }  
+              }  
+
+              void Clear()                          //clear  
+              {  
+                for(int i = 0;i<8;i++)  
+                {  
+                  digitalWrite(R[i],LOW);  
+                  digitalWrite(C[i],HIGH);  
+                }  
+              }
+            </textarea>
           </div>
         </div>
-        <div style="height: 50px;"></div>
         <div style=" margin: 30px,50px;" >
           <h3>演示视频</h3>
           <iframe width="858px" height="483px" src="assets/media/arduino.mp4" frameborder=0 allowfullscreen></iframe>
       </div>  
+
       </div>
     </section><!-- End Portfolio Details Section -->
 
