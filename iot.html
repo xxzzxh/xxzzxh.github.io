@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>IOT</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top header-inner-pages">
+    <div class="container d-flex align-items-center">
+
+      <h1 class="logo me-auto"><a href="index.html">Undefined</a></h1>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href="index.html">Home</a></li>
+          <li><a class="nav-link scrollto" href="index.html">Project</a></li>
+          <li><a class="nav-link scrollto" href="index.html">Team</a></li>
+          <li class="dropdown"><a href="#"><span>Blog</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="blog1.html">Blog 1</a></li>
+            </ul>
+          </li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+        <ol>
+          <li><a href="index.html">Home</a></li>
+          <li>Project</li>
+        </ol>
+        <h2>IOT</h2>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+
+    <!-- ======= Portfolio Details Section ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container">
+
+        <div class="row gy-4">
+          <div class="col-lg-8">
+            <div class="portfolio-details-slider swiper-container">
+              <h3>演示视频</h3>
+              <iframe width="858px" height="483px" src="assets/media/6.mp4" frameborder=0 allowfullscreen></iframe>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="portfolio-info">
+              <h3>简介</h3>
+              通过网页上的旋钮控制ESP8266上LED的亮度。
+      
+            </div>
+            <div style="height: 30px;"></div>
+            <div class="portfolio-info">
+              <h3>所需硬件</h3>
+              <ul>
+                <li><strong>ESP8266</strong> X 1</li>
+         
+              </ul>
+            </div>
+            <div style="height: 30px;"></div>
+            <div class="portfolio-info">
+              <h3>参考链接</h3>
+
+              <a href="https://www.cnblogs.com/gooutlook/p/9643790.html">
+                ESP8266（NodeMCU）ADC表盘上的模拟值
+              </a>
+         
+      
+            </div>
+          </div>
+<!--          
+          <div class="portfolio-description">
+              <h3>示意图</h3>
+            </div>
+          </div> -->
+          <div class="col-lg-8">
+          <div class="portfolio-description">
+            <h3>Arduino代码</h3>
+            <!-- <p>在arduino IDE端输入一段乐谱，通过1位数码管显示首个音符，玩家根据指示点击对应按钮进行该音符的弹奏；当玩家点击某个按钮后，数码管显示下一个音符指令；玩家按要求点击对应按钮后，LED RGB亮绿灯，若点击错误则LED RGB亮红灯，直到乐谱显示完毕。</p>
+            <h3>电路图</h3>
+
+            <img src="assets/img/project/arduino2/5.png" alt="" style="width: 600px;"> -->
+            <div style="height: 10px;"></div>
+
+            <textarea wrap="off" cols="100" rows="20" style="overflow:scroll;background-color: #f1f1f1;border:0px solid gray" style="width: 100%;">
+              #include <ESP8266WiFi.h>
+                #include <ESP8266WiFiMulti.h>
+                #include <ESP8266WebServer.h>
+                #include <FS.h>  
+                
+                ESP8266WiFiMulti wifiMulti;         // 建立ESP8266WiFiMulti对象
+                
+                ESP8266WebServer esp8266_server(80);// 建立esp8266网站服务器对象
+                
+                void setup() {
+                  Serial.begin(9600);        
+                  Serial.println("");
+                    
+                  pinMode(LED_BUILTIN, OUTPUT);     // 设置开发板内置LED引脚为输出模式
+                
+                  wifiMulti.addAP("TP-LINK_D030", "1995118xx"); // 将需要连接的一系列WiFi ID和密码输入这里
+                  Serial.println("Connecting ...");                            // 则尝试使用此处存储的密码进行连接。
+                
+                  int i = 0;  
+                  while (wifiMulti.run() != WL_CONNECTED) { // 尝试进行wifi连接。
+                    delay(1000);
+                    Serial.print(i++); Serial.print(' ');
+                  }
+                  
+                  // WiFi连接成功后将通过串口监视器输出连接成功信息 
+                  Serial.println('\n');
+                  Serial.print("Connected to ");
+                  Serial.println(WiFi.SSID());              // 通过串口监视器输出连接的WiFi名称
+                  Serial.print("IP address:\t");
+                  Serial.println(WiFi.localIP());           // 通过串口监视器输出ESP8266-NodeMCU的IP
+                
+                  if(SPIFFS.begin()){                       // 启动闪存文件系统
+                    Serial.println("SPIFFS Started.");
+                  } else {
+                    Serial.println("SPIFFS Failed to Start.");
+                  }
+                  
+                  //初始化网络服务器
+                  esp8266_server.on("/setLED",handlePWM); // 处理PWM设置请求
+                  esp8266_server.onNotFound(handleUserRequest); // 处理网络请求
+                
+                  // 启动网站服务
+                  esp8266_server.begin();
+                  Serial.println("HTTP server started");
+                }
+                
+                void loop() {
+                 esp8266_server.handleClient();   // 处理客户端请求
+                }
+                
+                // 处理PWM设置请求并对引脚进行PWM设置
+                void handlePWM(){
+                  String pwmStr = esp8266_server.arg("pwm"); // 获取用户请求中的PWM数值
+                  Serial.print("pwmStr = ");Serial.println(pwmStr);
+                  
+                  int pwmVal = pwmStr.toInt();              // 将用户请求中的PWM数值转换为整数
+                  pwmVal = 1023 - map(pwmVal,0,100,0,1023); // 用户请求数值为0-100，转为0-1023
+                  Serial.print("pwmVal = ");Serial.println(pwmVal);
+                  
+                  analogWrite(LED_BUILTIN, pwmVal);         // 实现PWM引脚设置
+                  esp8266_server.send(200, "text/plain");//向客户端发送200响应信息
+                }
+                
+                // 处理用户浏览器的HTTP访问
+                void handleUserRequest() {         
+                     
+                  // 获取用户请求资源(Request Resource）
+                  String reqResource = esp8266_server.uri();
+                  Serial.print("reqResource: ");
+                  Serial.println(reqResource);
+                  
+                  // 通过handleFileRead函数处处理用户请求资源
+                  bool fileReadOK = handleFileRead(reqResource);
+                
+                  // 如果在SPIFFS无法找到用户访问的资源，则回复404 (Not Found)
+                  if (!fileReadOK){                                                 
+                    esp8266_server.send(404, "text/plain", "404 Not Found"); 
+                  }
+                }
+                
+                bool handleFileRead(String resource) {            //处理浏览器HTTP访问
+                
+                  if (resource.endsWith("/")) {                   // 如果访问地址以"/"为结尾
+                    resource = "/index.html";                     // 则将访问地址修改为/index.html便于SPIFFS访问
+                  } 
+                  
+                  String contentType = getContentType(resource);  // 获取文件类型
+                  
+                  if (SPIFFS.exists(resource)) {                     // 如果访问的文件可以在SPIFFS中找到
+                    File file = SPIFFS.open(resource, "r");          // 则尝试打开该文件
+                    esp8266_server.streamFile(file, contentType);// 并且将该文件返回给浏览器
+                    file.close();                                // 并且关闭文件
+                    return true;                                 // 返回true
+                  }
+                  return false;                                  // 如果文件未找到，则返回false
+                }
+                
+                // 获取文件类型
+                String getContentType(String filename){
+                  if(filename.endsWith(".htm")) return "text/html";
+                  else if(filename.endsWith(".html")) return "text/html";
+                  else if(filename.endsWith(".css")) return "text/css";
+                  else if(filename.endsWith(".js")) return "application/javascript";
+                  else if(filename.endsWith(".png")) return "image/png";
+                  else if(filename.endsWith(".gif")) return "image/gif";
+                  else if(filename.endsWith(".jpg")) return "image/jpeg";
+                  else if(filename.endsWith(".ico")) return "image/x-icon";
+                  else if(filename.endsWith(".xml")) return "text/xml";
+                  else if(filename.endsWith(".pdf")) return "application/x-pdf";
+                  else if(filename.endsWith(".zip")) return "application/x-zip";
+                  else if(filename.endsWith(".gz")) return "application/x-gzip";
+                  return "text/plain";
+                }
+            </textarea>
+          </div>
+        </div>
+        <div style=" margin: 30px,50px;" >
+         
+
+        </div>   
+ 
+      </div>
+    </section><!-- End Portfolio Details Section -->
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+
+    
+    <div class="container footer-bottom clearfix">
+      <div class="copyright">Copyright &copy; 2021.Company name All rights reserved.</div>
+      <div class="credits"></div>
+    </div>
+   
+  </footer><!-- End Footer -->
+
+  <div id="preloader"></div>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>

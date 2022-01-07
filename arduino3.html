@@ -93,7 +93,7 @@
             <h3>电路图</h3>
 
             <img src="assets/img/project/final/10.png" alt="" style="width: 855px;">
-            <div style="height: 40px;"></div>
+            <!-- <div style="height: 40px;"></div> -->
           </div>
 
           <div class="col-lg-4">
@@ -120,7 +120,7 @@
           </div>
 <!--          
           <div class="portfolio-description">
-              <h3>示意图</h3>
+             
             </div>
           </div> -->
           <div class="col-lg-8">
@@ -131,10 +131,127 @@
 
             <img src="assets/img/project/final/10.png" alt="" style="width: 855px;">
             <div style="height: 40px;"></div> -->
+            <h3>具体代码</h3>
+            <textarea wrap="off" cols="100" rows="20" style="overflow:scroll;background-color: #f1f1f1;border:0px solid gray" style="width: 100%;">
 
-            <!-- <textarea wrap="off" cols="100" rows="20" style="overflow:scroll;background-color: #f1f1f1;border:0px solid gray" style="width: 100%;">
-
-            </textarea> -->
+              int trigPin = 11;    //Trig
+              int echoPin = 12;    //Echo
+              int pumpPin = 8;
+              
+              int led1Pin = 7;
+              int led2Pin = 6;
+              int led3Pin = 5;
+              int led4Pin = 4;
+              int led5Pin = 3;
+              int led6Pin = 9;
+              //int led6Pin = 2;
+              long duration, cm, inches;
+              int phone = 0;
+              int time;
+              
+              void setup() {
+                  digitalWrite(led6Pin,HIGH);
+                digitalWrite(led5Pin,HIGH);
+                digitalWrite(led4Pin,HIGH);
+                digitalWrite(led3Pin,HIGH);
+                digitalWrite(led2Pin,HIGH);
+                digitalWrite(led1Pin,HIGH);
+                digitalWrite(pumpPin,HIGH);
+                //Serial Port begin
+              //  digitalWrite(led1Pin,255);
+                Serial.begin (9600);
+                //Define inputs and outputs
+                pinMode(trigPin, OUTPUT);
+                pinMode(echoPin, INPUT);
+                pinMode(pumpPin, OUTPUT);
+                pinMode(led1Pin, OUTPUT);
+                pinMode(led2Pin, OUTPUT);
+                pinMode(led3Pin, OUTPUT);
+                pinMode(led4Pin, OUTPUT);
+                pinMode(led5Pin, OUTPUT);
+                pinMode(led6Pin, OUTPUT);
+                time = 0;
+              }
+               
+              void loop()
+              {
+              //   digitalWrite(led6Pin,LOW);
+                digitalWrite(pumpPin,HIGH);
+              //  delay(20000);
+              //  digitalWrite(pumpPin,LOW);
+                // The sensor is triggered by a HIGH pulse of 10 or more microseconds.
+                // Give a short LOW pulse beforehand to ensure a clean HIGH pulse:
+                digitalWrite(trigPin, LOW);
+                delayMicroseconds(5);
+                digitalWrite(trigPin, HIGH);
+                delayMicroseconds(10);
+                digitalWrite(trigPin, LOW);
+               
+                // Read the signal from the sensor: a HIGH pulse whose
+                // duration is the time (in microseconds) from the sending
+                // of the ping to the reception of its echo off of an object.
+                duration = pulseIn(echoPin, HIGH);
+               
+                // convert the time into a distance
+                cm = (duration/2) / 29.1;
+                inches = (duration/2) / 74;
+                Serial.print("duration： ");
+                Serial.println(duration);
+              
+                //detect the phone
+                if(duration <= 135){
+                  phone = 1;
+              //    Serial.println(phone);
+                  time++;
+                  
+                }else{
+                   
+                  phone = 0;
+              //    Serial.println(phone);
+                  time = 0;
+                }
+                Serial.println(time);
+                int interval = 25;
+                for(int i = 1; i < 7; i++){
+                  if(time == i*interval){
+                    //light ith led
+                    digitalWrite(pumpPin,LOW);
+                    delay(800);
+                    digitalWrite(pumpPin,HIGH);
+                    if(i == 1){
+              //        digitalWrite(led1Pin,HIGH);
+                      digitalWrite(led5Pin,LOW);
+                    }else if(i == 2){
+                      digitalWrite(led4Pin,LOW);
+                    }else if(i == 3){
+                      digitalWrite(led3Pin,LOW);
+                    }else if(i == 4){
+                      digitalWrite(led2Pin,LOW);
+                    }else if(i == 5){
+                      digitalWrite(led1Pin,LOW);
+                    }else if(i == 6){
+                      digitalWrite(led6Pin,LOW);
+                      digitalWrite(led1Pin,HIGH);
+                      digitalWrite(led2Pin,HIGH);
+                      digitalWrite(led3Pin,HIGH);
+                      digitalWrite(led4Pin,HIGH);
+                      digitalWrite(led5Pin,HIGH);
+                    }
+                    
+                  }
+                  if(time == 0){
+                    digitalWrite(led6Pin,HIGH);
+                    digitalWrite(led5Pin,HIGH);
+                    digitalWrite(led4Pin,HIGH);
+                    digitalWrite(led3Pin,HIGH);
+                    digitalWrite(led2Pin,HIGH);
+                    digitalWrite(led1Pin,HIGH);
+                  }
+                }
+                
+                delay(60*1000L);
+              }
+            </textarea>
           </div>
         </div>
         <!-- <div style=" margin: 30px,50px;" >
