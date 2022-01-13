@@ -114,6 +114,61 @@
           </div> -->
           <div class="col-lg-8">
           <div class="portfolio-description">
+            <h3>基本思路</h3>
+            <div style="height: 10px;"></div>
+            <p>基本思路是ESP8266工作AP模式下，作为TCP Server监听TCP Client的连接。因为网页HTTP默认的端口是80，所以ESP8266作为TCP Server的端口需要设置为80。电脑连接上ESP8266的AP后，网页访问默认IP地址192.168.4.1，此时ESP8266就会收到来自网页的HTTP的Get请求,此请求数据为HTML格式。ESP8266收到请求后，读出保存在Flash中的HTML格式网页，并将带有HTML应答头的HTML网页发送给网页，网页端就可以显示出网页。</p>
+            <h3>网页代码</h3>
+            <div style="height: 10px;"></div>
+            <textarea wrap="off" cols="100" rows="20" style="overflow:scroll;background-color: #f1f1f1;border:0px solid gray" style="width: 100%;">
+              <!DOCTYPE html>
+              <html lang="zh-CN">
+              <head>
+              <meta charset="UTF-8">
+              <script src="jquery.min.js"></script>
+              <script src="knob.js"></script>
+              
+              <script>
+                  $('.dial').trigger(
+                      'configure',
+                      {
+                          "min":0,
+                          "max":100,
+                          "width":150,
+                        "fgColor":"#ffec03",
+                        "skin":"tron",
+                        "thickness":0.2,
+                        "displayPrevious":true,
+                          "cursor":true
+                      }
+                  );
+              </script>
+              </head>
+              <body>
+              <center>
+              
+              <h1>旋钮控制ESP8266开发板LED亮度</h1>
+              <input type="text" class="dial" value="75" data-displayPrevious=true data-fgColor="#00A8A9" data-thickness=.3 value="29">
+              
+              <script>
+                  $(".dial").knob({
+                      'change' : function (v) { console.log(Math.round(v,0));    
+                  $.ajax({url: "/setLED?pwm="+Math.round(v,0), success: function(result){
+                          $("#div1").html(result);
+                      }});
+                }
+                  });
+                
+              
+              </script>
+              
+              </center>
+              </body>
+              </html>
+              
+              
+            
+            </textarea>
+            <div style="height: 10px;"></div>
             <h3>Arduino代码</h3>
             <!-- <p>在arduino IDE端输入一段乐谱，通过1位数码管显示首个音符，玩家根据指示点击对应按钮进行该音符的弹奏；当玩家点击某个按钮后，数码管显示下一个音符指令；玩家按要求点击对应按钮后，LED RGB亮绿灯，若点击错误则LED RGB亮红灯，直到乐谱显示完毕。</p>
             <h3>电路图</h3>
@@ -239,7 +294,7 @@
           </div>
         </div>
         <div style=" margin: 30px,50px;" >
-         
+        
 
         </div>   
  
